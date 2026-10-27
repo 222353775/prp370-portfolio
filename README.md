@@ -1,4 +1,3 @@
-# prp370-portfolio
 # PRP370 Digital Portfolio
 
 **Student:** Minathi Fortune Shezi
@@ -7,131 +6,115 @@
 **Assessment:** Assessment 2 - GitHub Portfolio (Industry Placement)
 
 ## Context & Declaration
-This portfolio is based on my Work Integrated Learning (WIL) Industry Placement at **Mavis Strategic Partners**. During this placement, I worked as a Full Stack Developer on the **ProKonecta** project. 
+This portfolio is based on my Work Integrated Learning (WIL) Industry Placement at **Mavis Strategic Partners**. During this placement, I am working as the solo Full Stack Developer on the **School Performance Hub** MVP. 
 
-For this assessment, I have focused on the **Customer Service Request-to-Quote workflow** (covering the customer request, provider matching, quote submission, and customer acceptance). Because I am no longer at the company, the Agile artefacts below have been **reconstructed** based on my actual development work to demonstrate how the project was (and could have been) planned, tracked, and reflected on. 
-
-*Note: Company, client, and personal data have been anonymised. This is an individual assessment, and the reflections focus on my personal contribution as a Full Stack Developer.*
+For this assessment, I have focused on the **Week 3 completion and Week 4 planning** of the Curriculum Tracker. The artefacts below demonstrate how I am planning, tracking, and reflecting on the project. 
+*Note: Due to a POPIA governance decision, the project is currently hosted locally (no remote GitHub or Vercel), so UI screenshots for Week 4 are pending. The evidence below reflects the actual database structure and codebase.*
 
 ---
 
 ## 1. Agile Team Charter
 
 ### Evidence
-**Team Purpose:** To design, build, and hand over a functional Request-to-Quote workflow for the ProKonecta marketplace platform.
-
-**My Role:** Full Stack Developer (React 19, Next.js 16, TypeScript).
+**Team Purpose:** To build a pilot-ready school management web app that proves a connected accountability loop for school leadership and teachers.
 
 **Team Structure:**
-*   **Me:** Full Stack Developer
-*   **Supervisor/Lead:** Sipo Kupiso
-*   **Receiving Team:** Backend Hardening & QA Team (responsible for independent testing and edge-case handling)
+*   **Me:** Solo Full Stack Developer (TypeScript, Next.js, Prisma)
+*   **Supervisor/Reviewer:** Sipo Kupiso (MSP Senior)
 
-**Core Values:**
-*   Working software over perfect code.
-*   Clear documentation for seamless handovers.
-*   Honest communication about blockers.
-
-**Working Agreements:**
-*   Commit to Git/GitHub frequently with clear messages.
-*   Validate all API inputs using TypeScript and ensure JWT authentication is secure.
-*   Document assumptions and known gaps before handing over to the testing team.
+**Core Values & Boundaries:**
+*   **Local-Only Rule (POPIA):** Development is fully local (Docker Postgres) until the MSP information officer signs off on the POPIA impact assessment. No real learner data leaves the machine.
+*   **Strict Multi-Tenancy:** Every table has a `schoolId`, and all data access goes through a tenant-scoped data layer. A user from School A can never read School B's data.
+*   **Audit Trail:** Every write action must be logged to the `AuditLog` table.
 
 **Definition of Done (DoD):**
-A feature is "done" when the UI connects to the API, handles loading/error states, and is documented for the receiving team. *Note: Backend hardening and full E2E testing are explicitly out of my scope and belong to the receiving team.*
+A task is done when the database migration runs cleanly, permissions are unit-tested (Vitest), the UI works on a phone-sized screen, and it passes the end-to-end Playwright tests. 
 
 ### Reflection
-During my WIL placement at Mavis Strategic Partners, I learned very quickly that a "Team Charter" is not just a corporate formality; it is crucial for managing expectations. When I drafted the Definition of Done for my full stack work, I had to consciously separate my responsibilities (building the frontend, connecting APIs, and basic validation) from the receiving team's responsibilities (backend hardening and rigorous testing). This artefact demonstrates that I understand Agile is about delivering value incrementally. If I did this again, I would push for a shared definition of done with the receiving team from day one, ensuring that our API contracts and acceptance criteria were agreed upon before I wrote a single line of code.
+During my placement, the Agile Team Charter had to adapt to a major governance blocker: the POPIA compliance sign-off is delayed. This forced a "local-only" working agreement, meaning I cannot use remote CI or share preview links with MSP. This artefact demonstrates that Agile is about adapting to real-world constraints. If I did this again, I would push for the POPIA assessment to be started on Day 1, as it fundamentally changes the deployment workflow.
 
 ---
 
 ## 2. User Stories and Tasks
 
 ### Evidence
-**US1 — Submit a service request**
-*As a customer, I want to describe the service I need so that relevant providers can respond.*
-*   Build the request form for category, description, timing, budget, and location.
-*   Validate and submit the request.
-*   Show a confirmation and the request’s status.
+**US1 — View Weekly Timetable (Completed Week 3)**
+*As a teacher, I want to see my timetable for the week so I can plan my schedule.*
+*   Build `/teacher/timetable` page.
+*   Create `timetable-week.tsx` component.
+*   Fetch data via `src/server/db/timetableSlot.ts`.
 
-**US2 — Find and unlock matching leads**
-*As a provider, I want to see relevant service requests and unlock their details so that I can decide which opportunities to pursue.*
-*   Match requests to providers by category and service area.
-*   Show a lead preview and the unlock cost.
-*   Check credit balance and handle insufficient-credit responses.
-*   Reveal request details after a successful unlock.
+**US2 — Mark Lesson Done (Planned Week 4)**
+*As a teacher, I want to mark a lesson done in under a minute, or give a reason and recovery date, so that pacing is accurate.*
+*   Create `LessonRecord` database model.
+*   Add permission rules (`lessonRecord`) in `permissions.ts` (Unit tested).
+*   Build the UI marking flow.
 
-**US3 — Send a quote**
-*As a provider, I want to send a quote for an unlocked request so that the customer can consider my offer.*
-*   Create a quote with price, terms, and validity.
-*   Validate required fields and save the quote.
-*   Notify the customer that a quote is available.
+**US3 — Track Pacing (Planned Week 4)**
+*As a teacher, I want to see topics done vs. expected so I know if I am behind.*
+*   Create `CurriculumTopic` model.
+*   Build the progress bar UI.
 
-**US4 — Review and respond to quotes**
-*As a customer, I want to compare provider quotes and accept one so that I can move forward with the service.*
-*   Display incoming quotes and relevant provider details.
-*   Allow the customer to accept, reject, or negotiate a quote.
-*   Update the request and job status when a quote is accepted.
+![Code Snippet](code.png)
 
 ### Reflection
-I used user stories to break down the complex Request-to-Quote workflow into manageable, user-centric tasks. This artefact demonstrates my ability to translate technical requirements (like JWT authentication and MySQL data mapping) into actual user value. The most challenging story to implement was US2 (Find and unlock matching leads) because it required complex validation and edge-case handling for the credit balance. I included these stories to show how I approach full-stack development: starting with the end-user's goal and working backwards to the database schema. This connects directly to my product backlog, where these stories became actionable tasks.
+I used user stories to break down the curriculum tracker. This artefact shows how I prioritize tasks. While the permission rules and tests for US2 and US3 were written in Week 2, the actual database models and UI have not been built yet. This highlights a key lesson: writing backend logic is useless if the frontend blocks aren't finished. It connects to my product backlog, where I have to move these items forward.
 
 ---
 
 ## 3. Product Backlog
 
 ### Evidence
-*Note: Priorities were reconstructed based on the critical path of the WIL project.*
-
-| Priority | Backlog Item | Type | Status |
+| Priority | Backlog Item | Status | Notes |
 | :--- | :--- | :--- | :--- |
-| P1 | Customer service-request form, validation, and submission | Feature | Done |
-| P1 | Provider matching and lead preview | Feature | Done |
-| P1 | Lead unlock flow with credit and balance handling | Feature | Done |
-| P1 | Provider quote submission | Feature | Done |
-| P1 | Customer quote review and response | Feature | Done |
-| P1 | Backend hardening: authorization, validation, error handling, and transaction safety | Tech Debt | Handed Over |
-| P1 | End-to-end and integration testing across the request-to-quote journey | Testing | Handed Over |
-| P2 | Feature documentation, acceptance criteria, and handover notes | Documentation | Done |
+| P1 | Authentication & Tenant Isolation | Done | 437 of 437 tests pass |
+| P1 | Timetable & Terms Migration | Done | Includes UI component |
+| P1 | Seed Script (Umthombo High) | Done | 20 staff, 150 learners |
+| P1 | **CurriculumTopic & LessonRecord Migrations** | **To Do** | Blocked until Week 4 branch starts |
+| P1 | Today's Lessons Screen (US2) | To Do | |
+| P1 | Teacher Pacing View (US3) | To Do | |
+| P2 | Next.js 16.4.0 Upgrade | To Do | Security advisory build warning |
+
+![Database Schema](database.png)
 
 ### Reflection
-This product backlog represents the full scope of the Request-to-Quote feature I built during my placement at Mavis Strategic Partners. I included it in my portfolio because it highlights a major shift in my mindset as a developer. Previously, I viewed "coding the feature" as the only real task. However, constructing this backlog showed me that technical debt and testing are not afterthoughts; they are critical P1 items. I had to prioritize the core workflow (submission, matching, quoting) so I had something to hand over, while leaving the backend hardening to the receiving team. This backlog connects to the sprint backlog by showing exactly what I pulled into my final sprint before the handover.
+This product backlog represents the reality of the project. I included it to show that I understand how to manage prerequisites. Before I can build the Week 4 UI, I need to do the database migrations for `CurriculumTopic` and `LessonRecord`. I also logged a security advisory (Next.js upgrade) as a P2 item. This backlog connects to the sprint backlog by showing exactly what was pulled into the completed Week 3 sprint.
 
 ---
 
-## 4. Sprint Backlog
+## 4. Sprint Backlog (Completed Week 3)
 
 ### Evidence
-**Sprint Goal:** Deliver a usable Request-to-Quote workflow and hand over a documented implementation for independent testing and backend hardening.
+**Sprint Goal:** Deliver a fully functional, multi-tenant timetable system with a seeded fictional school.
 
-| Task | Assigned To | Status |
-| :--- | :--- | :--- |
-| Implement the feature UI and connect it to the relevant APIs (Next.js/React) | Me | Done |
-| Handle loading, validation, and error states | Me | Done |
-| Document the flow, assumptions, and known gaps for handover | Me | Done |
-| Test the workflow across customer and provider roles | Receiving Team | Handed Over |
-| Check authorization, input validation, and backend edge cases | Receiving Team | Handed Over |
-| Harden backend behavior and report defects or follow-up work | Receiving Team | Handed Over |
+| Task | Status |
+| :--- | :--- |
+| Database migration: `timetable_and_learners` added | Done |
+| Tenant-scoped data layer: filtered by `schoolId` with tests | Done |
+| Idempotent seed script (`pnpm db:seed`) | Done |
+| UI component: mobile-first weekly timetable | Done |
+| Playwright E2E test: role-gating per role | Done |
 
 ### Reflection
-This sprint backlog illustrates the transition of my work from active development to a handover phase. I selected this artefact because it clearly shows how a sprint goal must align with the team's boundaries. As a full stack developer, my sprint goal was to build and document a working feature, not necessarily to perfect it to production standards. The moment I handed the tasks over to the receiving team, I had to trust the process and let go. This artefact connects to my retrospective because it proves that while the coding phase was successful, the handover phase exposed a need for better upfront API contract agreements. 
+This sprint backlog illustrates the Week 3 completion. I selected this artefact because it proves I delivered a working feature despite governance challenges. The biggest challenge was the schema freeze: I needed an approved one-off migration to add the `AuditLog` table. The moment I got approval, I finished the sprint. This artefact connects to my retrospective because it proves the foundation is solid for Week 4.
 
 ---
 
 ## 5. Agile Logbook
 
 ### Evidence
-*Note: The following stand-up entries and retrospective are representative of my actual experience during the handover phase.*
+*Note: Below are actual blockers logged from governance decisions (G-01 to G-28).*
 
-**Daily Stand-up Entries:**
-*   **Day 1:** *Did:* Built the request flow and connected its main submission path. *To do:* Complete provider matching and review the request journey end to end. *Blocker:* Need confirmation of expected request fields and matching rules.
-*   **Day 2:** *Did:* Implemented the provider lead view and quote-submission path. *To do:* Check customer quote review and prepare the handover notes. *Blocker:* Credit and API edge cases need agreement with the backend owners.
-*   **Day 3:** *Did:* Fixed UI issues, documented the workflow, and prepared the handover. *To do:* Support the receiving team as they test and harden the feature. *Blocker:* Testing feedback and backend changes are now dependent on the receiving team.
+**Daily Stand-up Entries / Blockers:**
+*   **Governance (G-10):** Development is fully local (no GitHub remote) until POPIA impact assessment is signed off. CI has never run remotely. *Action:* Focus on local Vitest tests.
+*   **Governance (G-11):** Better Auth conflict: Making school mandatory on every session broke parent logins (parents with kids at two schools). *Action:* Enforced tenancy in the data layer instead of the session.
+*   **Governance (G-14):** Schema freeze: Needed a one-off migration to add `AuditLog` table so every write is audited from day one. 
+*   **Scope Drift:** System-admin tooling (a stage 5 item) was built while Week 4 hadn't started. *Action:* Log it in "after MVP" and refocus.
 
 **Retrospective:**
-*   **Went well:** A working feature was available to hand over rather than only a design or specification. Separating implementation from follow-on testing made ownership of the next phase visible.
-*   **Didn't go well:** The handover exposed gaps between the feature’s assumptions and the backend’s expected behavior. Acceptance criteria and edge cases needed clarification during testing.
-*   **Improvements:** Agree on acceptance criteria, API contracts, and a shared definition of done before implementation begins. Include a handover checklist with setup steps, test scenarios, and named owners for follow-up work.
+*   **Went well:** Permissions and tenant isolation were built and tested first (437 tests passing). 
+*   **Didn't go well:** Scope drifted into stage 5 system-admin tooling. No shareable preview link for MSP due to local-only hosting.
+*   **Improvements:** Start Week 4 immediately with the `CurriculumTopic` migration. Agree on a private remote repo or preview host with MSP before the 13 Nov prototype demo.
 
 ### Reflection
-The Agile Logbook is the most honest reflection of my WIL experience at Mavis Strategic Partners. Tracking my daily stand-ups revealed a recurring pattern: my blockers were often not technical coding errors, but rather *communication gaps* regarding API expectations and edge cases. The retrospective was a turning point for me. It taught me that "done" should mean more than a completed interface; it requires agreed acceptance criteria and reliable backend behavior. Deferring backend hardening creates technical debt, and a receiving team needs enough context (API expectations, setup instructions) to test independently. This logbook ties all my previous artefacts together, proving that clear ownership and early communication are what separate a deliberate handover from unfinished work.
+The Agile Logbook is the most honest reflection of my WIL experience. My blockers are not just coding bugs—they are POPIA compliance, authentication conflicts, and scope creep. Tracking these in the logbook taught me that "done" requires balancing security and governance with features. Deferring the Next.js security upgrade creates technical debt. This logbook ties all my previous artefacts together, proving that I can manage a project solo and adapt to real-world blockers.
