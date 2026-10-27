@@ -9,7 +9,7 @@
 This portfolio is based on my Work Integrated Learning (WIL) Industry Placement at **Mavis Strategic Partners**. During this placement, I am working as the solo Full Stack Developer on the **School Performance Hub** MVP. 
 
 For this assessment, I have focused on the **Week 3 completion and Week 4 planning** of the Curriculum Tracker. The artefacts below demonstrate how I am planning, tracking, and reflecting on the project. 
-*Note: Due to a POPIA governance decision, the project is currently hosted locally (no remote GitHub or Vercel), so UI screenshots for Week 4 are pending. The evidence below reflects the actual database structure and codebase.*
+*Note: Due to a POPIA governance decision, the project is currently hosted locally (no remote GitHub or Vercel), so UI screenshots for Week 4 are pending. The evidence below reflects the actual database structure, working application, and codebase.*
 
 ---
 
@@ -43,6 +43,9 @@ During my placement, the Agile Team Charter had to adapt to a major governance b
 *   Build `/teacher/timetable` page.
 *   Create `timetable-week.tsx` component.
 *   Fetch data via `src/server/db/timetableSlot.ts`.
+
+![Timetable UI](ui1.png)
+![Dashboard UI](ui2.png)
 
 **US2 — Mark Lesson Done (Planned Week 4)**
 *As a teacher, I want to mark a lesson done in under a minute, or give a reason and recovery date, so that pacing is accurate.*
@@ -110,6 +113,9 @@ This sprint backlog illustrates the Week 3 completion. I selected this artefact 
 *   **Governance (G-11):** Better Auth conflict: Making school mandatory on every session broke parent logins (parents with kids at two schools). *Action:* Enforced tenancy in the data layer instead of the session.
 *   **Governance (G-14):** Schema freeze: Needed a one-off migration to add `AuditLog` table so every write is audited from day one. 
 *   **Scope Drift:** System-admin tooling (a stage 5 item) was built while Week 4 hadn't started. *Action:* Log it in "after MVP" and refocus.
+
+![School Admin Dashboard](ui3.png)
+![System Admin Dashboard](ui4.png)
 
 **Retrospective:**
 *   **Went well:** Permissions and tenant isolation were built and tested first (437 tests passing). 
