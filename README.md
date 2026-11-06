@@ -21,7 +21,7 @@
 - [5. Agile Logbook](#5-agile-logbook)
 - [6. Skills Developed](#6-skills-developed)
 - [7. Connect and Conclusion](#7-connect-and-conclusion)
-
+- [References](#references)
 
 ---
 
@@ -338,3 +338,6 @@ Overall, this placement has shown me that real software work depends on people, 
 
 ---
 
+## References
+
+Republic of South Africa (2013) *Protection of Personal Information Act 4 of 2013*. Pretoria: Government Printer.
